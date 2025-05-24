@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:SampleMaui"
+             x:Class="SampleMaui.Pages.AccountAddPage"
+             Title="Add Account" >
+    <ScrollView >
+        <Grid Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Label  Text="Server (PBX):" Grid.Row="0" Margin="5" VerticalOptions="Center"/>
+            <Entry x:Name="tbSipServer"  Grid.Row="0" Grid.Column="1" Margin="5"/>
+
+            <Label  Text="Extension:" Grid.Row="1"  Margin="5" VerticalOptions="Center"/>
+            <Entry x:Name="tbSipExtension" Grid.Row="1" Grid.Column="1" Margin="5"/>
+
+            <Label  Text="Password:" Grid.Row="2" Margin="5" VerticalOptions="Center"/>
+            <Entry x:Name="tbSipPassword" Grid.Row="2" Grid.Column="1" Margin="5" IsPassword="true"/>
+            <Label Text="{x:Static local:Icons.visibility}" Grid.Row="2" Grid.Column="0" Margin="5"  ZIndex="2"
+                          FontFamily="MaterialIconsRegular" FontSize="20" HorizontalOptions="End" VerticalOptions="Center" >
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="ShowPassword_Click"/>
+                </Label.GestureRecognizers>
+            </Label>
+
+            <BoxView HeightRequest="1" Color="LightGray" Grid.Row="3" Grid.ColumnSpan="2" VerticalOptions="Center" Margin="5,0"/>
+
+            <Label Text="Expire time (sec):" Grid.Row="4"  Margin="5" VerticalOptions="Center"/>
+            <Entry  x:Name="tbExpireTime"  Grid.Row="4" Grid.Column="1" Margin="5"/>
+
+            <Label  Text="Display name:" Grid.Row="5"  Margin="5" VerticalOptions="Center"/>
+            <Entry  x:Name="tbDisplayName" Grid.Row="5" Grid.Column="1" Margin="5"/>
+
+            <Label  Text="Transport:" Grid.Row="6"  Margin="5" VerticalOptions="Center"/>
+            <Picker x:Name="cbTransport" Grid.Row="6" Grid.Column="1" Margin="5"/>
+
+            <Label  Text="Bind address:" Grid.Row="7"  Margin="5" VerticalOptions="Center" IsVisible="False"/>
+            <Picker  x:Name="cbBindAddr" Grid.Row="7" Grid.Column="1" Margin="5" IsVisible="False"/>
+
+            <Label  Text="Secure media:" Grid.Row="8"  Margin="5" VerticalOptions="Center"/>
+            <Picker  x:Name="cbSecureMedia" Grid.Row="8" Grid.Column="1" Margin="5"/>
+
+            <Label x:Name="tbErrText"  Grid.Row="9" Text="Error text" HorizontalOptions="Start" 
+                   IsVisible="false" Grid.ColumnSpan="2" Grid.Column="0" Margin="5,0,5,0" TextColor="Red"/>
+
+            <HorizontalStackLayout Grid.Row="10" Grid.ColumnSpan="2" HorizontalOptions="Center" >
+                <Button x:Name="btnOK" Text="OK"  WidthRequest="100" Margin="15" HorizontalOptions="End" Clicked="btnOK_Click"/>
+                <Button x:Name="btnCancel" Text="Cancel" WidthRequest="100" Margin="15" HorizontalOptions="End" Clicked="btnCancel_Click"/>
+            </HorizontalStackLayout>
+            
+            <Button x:Name="btnLocalAccount" Grid.Row="11" Grid.Column="1" VerticalOptions="End"
+                Text="Add Local Account"  Clicked="AddLocalAccount_Click" IsVisible="False"/>
+        </Grid>
+    </ScrollView >
+</ContentPage>

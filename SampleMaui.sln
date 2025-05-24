@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35219.272
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleMaui", "SampleMaui\SampleMaui.csproj", "{BEBE40D4-9FEB-41E1-B5B0-45546D62FC0E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BindingAndroid", "BindingAndroid\BindingAndroid.csproj", "{A2CE0DB8-1322-49C1-8EBE-1BF05B84DE9B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BEBE40D4-9FEB-41E1-B5B0-45546D62FC0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEBE40D4-9FEB-41E1-B5B0-45546D62FC0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEBE40D4-9FEB-41E1-B5B0-45546D62FC0E}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{BEBE40D4-9FEB-41E1-B5B0-45546D62FC0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEBE40D4-9FEB-41E1-B5B0-45546D62FC0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEBE40D4-9FEB-41E1-B5B0-45546D62FC0E}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{A2CE0DB8-1322-49C1-8EBE-1BF05B84DE9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2CE0DB8-1322-49C1-8EBE-1BF05B84DE9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2CE0DB8-1322-49C1-8EBE-1BF05B84DE9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2CE0DB8-1322-49C1-8EBE-1BF05B84DE9B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {98BF5DAC-7119-40C8-B1A7-DC7A6C535F5A}
+	EndGlobalSection
+EndGlobal

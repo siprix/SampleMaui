@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+	<application android:allowBackup="true" 
+                 android:icon="@mipmap/appicon" 
+                 android:roundIcon="@mipmap/appicon_round" 
+                 android:supportsRtl="true">
+
+        <service
+           android:name=".CallNotifService"
+           android:exported="false"
+           android:stopWithTask="false"
+           android:foregroundServiceType="phoneCall" />        
+    </application>
+    
+
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.INTERNET" />
+    
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_PHONE_CALL" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+
+    <!-- Siprix permissions -->
+    <!-- Comment if app makes audio only calls -->
+    <uses-permission android:name="android.permission.CAMERA" android:required="false"/>
+
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <!-- Uncomment if required to use bluetooth audio devices
+    <uses-permission android:name="android.permission.BLUETOOTH" /> 
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" /> -->
+
+    <!-- Uncomment if required to mute SIP call when GSM call received
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> -->
+
+    <!-- Foreground mode permission -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <!-- Display floating notifications when incoming call received -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT"/>
+    <!-- Siprix permissions -->
+</manifest>

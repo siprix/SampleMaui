@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:system="clr-namespace:System;assembly=netstandard"
+             xmlns:local="clr-namespace:SampleMaui"
+             x:Class="SampleMaui.Pages.AccountsListPage"
+             Title="Accounts">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add account" Clicked="AccountAdd_Click" IconImageSource="{FontImage Glyph='+', Color=Black, Size=22}" />
+    </ContentPage.ToolbarItems>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        
+        <CollectionView Margin="2" x:Name="lbAccounts"
+             ItemsSource="{Binding Path=Collection}" SelectionMode="Single"
+             SelectedItem="{Binding Path=SelectedAccount, Mode=TwoWay}">
+
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="2" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                   <Grid>
+                       <Grid.ColumnDefinitions>
+                           <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <BoxView HeightRequest="1" Color="LightGray" Grid.Row="0" Grid.ColumnSpan="2" VerticalOptions="End" Margin="5,0"/>
+
+                        <ActivityIndicator Grid.Column="0" IsRunning="true" IsVisible="{Binding IsWaiting}" Scale="0.8"/>
+
+                        <Label Grid.Column="0" 
+                           Text="{Binding RegState, Converter={StaticResource RegStateIconConverter}, Mode=OneWay}"
+                           TextColor="{Binding RegState, Converter={StaticResource RegStateColorConverter}, Mode=OneWay}" 
+                           FontFamily="MaterialIconsRegular" FontSize="22" Margin="5" VerticalOptions="Center"  />
+
+                        <Label Grid.Column="1" VerticalOptions="Center">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="{Binding Uri}" FontAttributes="Bold"/>
+                                    <Span Text="{x:Static system:Environment.NewLine}"/>
+                                    <Span Text="ID: " FontAttributes="Italic" TextColor="Gray" />
+                                    <Span Text="{Binding ID, Mode=OneWay}" FontAttributes="Italic" TextColor="Gray" />
+                                    <Span Text=" Reg: " FontAttributes="Italic"  TextColor="Gray" />
+                                    <Span Text="{Binding RegText, Mode=OneWay}" FontAttributes="Italic" TextColor="Gray" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+
+                        <HorizontalStackLayout Grid.Column="1" Grid.ColumnSpan="3"  HorizontalOptions="End">
+                            <HorizontalStackLayout IsVisible="False">
+                                <Button Text="{x:Static local:Icons.edit}" Style="{StaticResource MenuItemButton}"
+                                        Clicked="AccountEdit_Click" />
+
+                                <Button Text="{x:Static local:Icons.refresh}" Style="{StaticResource MenuItemButton}"
+                                        Command="{Binding RegisterCommand}" IsEnabled="{Binding CanRegister}"/>
+
+                                <Button Text="{x:Static local:Icons.cancel_presentation}" Style="{StaticResource MenuItemButton}"
+                                        Command="{Binding UnRegisterCommand}" IsEnabled="{Binding CanUnRegister}" />
+
+                                <Button Text="{x:Static local:Icons.delete}" Style="{StaticResource MenuItemButton}"
+                                        Clicked="AccountDelete_Click" BackgroundColor="red"/>
+                            </HorizontalStackLayout>
+
+                            <Button Style="{StaticResource MenuButton}" Clicked="ButtonMenu_Click"/>
+                        </HorizontalStackLayout>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Button  HorizontalOptions="End" Grid.Row="1" Clicked="AccountAdd_Click"
+            Text="Add account" Margin="0,0,5,5" >
+            <Button.ImageSource>
+                <FontImageSource Glyph="{x:Static local:Icons.add_card}" FontFamily="MaterialIconsRegular"  Size="20" />
+            </Button.ImageSource>
+        </Button>
+
+        <HorizontalStackLayout x:Name="slForegroundMode" Grid.Row="1" HorizontalOptions="Start" VerticalOptions="Center">
+            <Switch Toggled = "StartForegroundMode_Click" VerticalOptions="Center" Margin="5,0,0,0"/>
+            <Label Text="Foreground mode" VerticalOptions="Center"/>
+        </HorizontalStackLayout>
+
+        <BoxView HeightRequest="1" Color="LightGray" Grid.Row="2" Grid.ColumnSpan="2" VerticalOptions="Start" Margin="5,0"/>
+
+        <Label Text="{x:Static local:Icons.info}" Grid.Row="2" Grid.RowSpan="2" 
+            VerticalOptions="Center" HorizontalOptions="Start"
+            FontFamily="MaterialIconsRegular"  FontSize="24" Margin="7" 
+            TextColor="{AppThemeBinding Light=DarkBlue, Dark={StaticResource White}}"/>
+
+        <Border x:Name="borderSwitchTheme"  Grid.Row="2" Grid.RowSpan="2" Padding="5" 
+                VerticalOptions="Center" HorizontalOptions="End" Margin="7" ZIndex="5">
+            <Label x:Name="lblSwitchTheme" Text="{x:Static local:Icons.info}"
+                FontFamily="MaterialIconsRegular"  FontSize="20" 
+                TextColor="{AppThemeBinding Light=DarkBlue, Dark={StaticResource White}}"/>
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="15" />
+            </Border.StrokeShape>
+            <Border.GestureRecognizers>
+                <TapGestureRecognizer Tapped="SwitchTheme_Click" />
+            </Border.GestureRecognizers>
+        </Border>
+
+        <Label Grid.Row="2" Margin="35,5,0,7">
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span Text="Product website: "  TextColor="{AppThemeBinding Light=DarkBlue, Dark={StaticResource White}}"/>
+                    <Span Text="siprix-voip.com" TextColor="Blue" TextDecorations="Underline" >
+                        <Span.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnTapGestureRecognizerTapped" CommandParameter="https://siprix-voip.com"/>
+                        </Span.GestureRecognizers>
+                    </Span>
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+
+        <Label Grid.Row="3" Margin="35,0,0,12">
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span Text="Online manual: " TextColor="{AppThemeBinding Light=DarkBlue, Dark={StaticResource White}}"/>
+                    <Span Text="docs.siprix-voip.com" TextColor="Blue" TextDecorations="Underline">
+                        <Span.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnTapGestureRecognizerTapped" CommandParameter="https://docs.siprix-voip.com" />
+                        </Span.GestureRecognizers>
+                    </Span>
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+
+        <Label x:Name="tbNetworkLost" Margin="2,0" Grid.Row="4" 
+           IsVisible="{Binding NetworkLost, Mode=OneWay}"
+           Background="red" HorizontalTextAlignment="Center"
+           Text="Internet connection lost" TextColor="White"/>
+    </Grid>
+</ContentPage>

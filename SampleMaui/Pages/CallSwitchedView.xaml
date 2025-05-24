@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:system="clr-namespace:System;assembly=netstandard"
+             xmlns:local="clr-namespace:SampleMaui"
+             x:Class="SampleMaui.Pages.CallSwitchedView">
+
+    <ContentView.Resources>
+        <Style x:Key="IconButton" TargetType="Button">
+            <Setter Property="WidthRequest" Value="110" />
+            <Setter Property="MaximumWidthRequest" Value="125" />
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="ContentLayout" Value="Left,3" />
+            <Setter Property="Margin" Value="10,5" />
+        </Style>
+    </ContentView.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- 'Video' controls -->
+        <Grid  x:Name="gridVideo"  Grid.Row="0" Grid.RowSpan="4" IsVisible="false"  >
+            <!--
+            <StackPanel Orientation="Horizontal" HorizontalOptions="End" VerticalOptions="End" Panel.ZIndex="2">
+                <Border x:Name="receivedVideo"  Background="AliceBlue" Margin="2"  Width="176" Height="144"/>
+                <Border x:Name="receivedVideo1" Background="AliceBlue" Margin="2" Width="176" Height="144" IsVisible="false"/>
+                <Border x:Name="receivedVideo2" Background="AliceBlue" Margin="2" Width="176" Height="144" IsVisible="false"/>
+                <Border x:Name="receivedVideo3" Background="AliceBlue" Margin="2" Width="176" Height="144" IsVisible="false"/>
+            </StackPanel> 
+
+            <Border x:Name="previewVideo" Background="Aqua"
+                      HorizontalOptions="End" VerticalOptions="Start" Width="176" Height="144" Margin="0,0,2,0" />
+
+            <Button Width="70" Height="40"  HorizontalOptions="Start" VerticalOptions="End"
+                Command="{Binding MuteCamCommand}" IsVisible="{Binding CanMuteCam}">
+                
+                <HorizontalStackLayout>
+                    <Label Text="{Binding IsCamMuted, Converter={StaticResource CamMuteIconConverter}, Mode=OneWay}"                           
+                        FontFamily="MaterialIconsRegular"  FontSize="20" HorizontalOptions="Center" />
+                    <Label Text="{Binding IsCamMuted, Converter={StaticResource MuteTextConverter}, Mode=OneWay}" />
+                </HorizontalStackLayout> 
+            </Button>
+-->
+        </Grid>
+
+
+        <!-- 'Name and extension'  -->
+        <Label x:Name="tbNameAndExt" Text="{Binding NameAndExt}" IsVisible="False" 
+               FontAttributes="Bold" Grid.Row="0" FontSize="16" HorizontalOptions="Center"/>
+
+        <!-- 'Call details' section -->
+        <Label  x:Name="spDetails" Grid.Row="1" HorizontalOptions="Center"  IsVisible="False">
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span Text="State: " FontAttributes="Bold"/>
+                    <Span Text="{Binding CallState, Mode=OneWay}" FontAttributes="Bold"/>
+                    <Span Text="{x:Static system:Environment.NewLine}"/>
+                    
+                    <Span Text="Acc: " />
+                    <Span Text="{Binding AccUri, Mode=OneWay}"  />
+                    <Span Text="{x:Static system:Environment.NewLine}"/>
+
+                    <Span Text="CallId: " />
+                    <Span Text="{Binding ID, Mode=OneWay}"  />
+                    <Span Text="{x:Static system:Environment.NewLine}"/>
+
+                    <Span Text="DTMF: " />
+                    <Span Text="{Binding ReceivedDtmf, Mode=OneWay}"  />
+                    <Span Text="{x:Static system:Environment.NewLine}"/>
+
+                    <Span Text="{Binding Duration, Mode=OneWay}" FontAttributes="Bold" FontSize="14" TextColor="Green" />
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+  
+        <!-- 'Redirect incoming call' button -->
+        <Button x:Name="bnRedirect"   Grid.Row="2" Text="Redirect" Clicked = "TransferBlindMode_Click" 
+                Style="{StaticResource IconButton}" IsVisible="False" Margin="0,190,0,0">
+            <Button.ImageSource>
+                <FontImageSource Glyph="{x:Static local:Icons.forward}" FontFamily="MaterialIconsRegular" Size="20" />
+            </Button.ImageSource>
+        </Button>
+
+        <!-- 'Hangup call' button  -->
+        <Button x:Name="bnHangup"  Grid.Row="3" Text="Hangup" Command="{Binding HangupCommand}" Margin="0,0,0,20"
+                IsVisible="False" Style="{StaticResource IconButton}" BackgroundColor="Red">
+            <Button.ImageSource>
+                <FontImageSource Glyph="{x:Static local:Icons.call_end}" FontFamily="MaterialIconsRegular"  Size="20" />
+            </Button.ImageSource>
+        </Button>
+
+        <!-- 'Accept/Reject incoming call' section -->
+        <HorizontalStackLayout x:Name="spAcceptReject" Grid.Row="3" HorizontalOptions="Center" IsVisible="False">
+            <Button  Text="Reject" Command="{Binding RejectCommand}" BackgroundColor="Red" 
+                     Style="{StaticResource IconButton}">
+                <Button.ImageSource>
+                    <FontImageSource Glyph="{x:Static local:Icons.call_end}" FontFamily="MaterialIconsRegular"  Size="25" />
+                </Button.ImageSource>
+            </Button>
+
+            <Button Text="Accept" Command="{Binding AcceptCommand}" BackgroundColor="Green" 
+                     Style="{StaticResource IconButton}">
+                <Button.ImageSource>
+                    <FontImageSource Glyph="{x:Static local:Icons.call}"  FontFamily="MaterialIconsRegular"  Size="25" />
+                </Button.ImageSource>
+            </Button>
+        </HorizontalStackLayout>
+
+        <!-- 'Redirect/Transfer' section -->
+        <HorizontalStackLayout x:Name="gridTransfer" Grid.Row="2" IsVisible="False"
+                VerticalOptions="Center" HorizontalOptions="Center">
+
+            <Entry x:Name="tbTransferToExt" MinimumWidthRequest="110" Margin="3" TextChanged="OnTransferTextChanged"/>
+
+            <Button x:Name="bnTransfer" Text="Transfer"  Clicked="TransferBlind_Click" IsEnabled="False"
+                    Style="{StaticResource IconButton}" Margin="3,0" HorizontalOptions="End" />
+
+            <Button  HorizontalOptions="End" Clicked="TransferBlindMode_Click" Style="{StaticResource IconButton}"
+                Text="{x:Static local:Icons.close}" FontFamily="MaterialIconsRegular" 
+                     FontSize="18" BackgroundColor="Transparent" TextColor="Red" BorderWidth="2"/>
+
+        </HorizontalStackLayout> 
+
+        <!-- 'Send DTMF' section -->
+        <Grid x:Name="gridDtmf" Grid.Row="2" IsVisible="False"
+              HorizontalOptions="Center" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Label x:Name="tbSentDtmf" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Margin="3"
+                   HorizontalTextAlignment="Center"   FontAttributes="Bold"  />
+
+            <Button  Grid.Column="1"  Grid.Row="5"  Clicked="DtmfMode_Click" BackgroundColor="Transparent" TextColor="Red" BorderWidth="2"
+                Margin="2" HorizontalOptions="End" Style="{StaticResource IconButton}"
+                Text="{x:Static local:Icons.close}" FontFamily="MaterialIconsRegular" FontSize="18">
+            </Button>
+
+            <Button Text="1" Grid.Column="0" Grid.Row="1" Style="{StaticResource IconButton}" Margin="2" Clicked="DtmfSend_Click"/>
+            <Button Text="2" Grid.Column="1" Grid.Row="1" Style="{StaticResource IconButton}" Margin="2" Clicked="DtmfSend_Click"/>
+            <Button Text="3" Grid.Column="2" Grid.Row="1" Style="{StaticResource IconButton}" Margin="2" Clicked="DtmfSend_Click"/>
+
+            <Button Text="4" Grid.Column="0" Grid.Row="2" Style="{StaticResource IconButton}" Margin="2" Clicked="DtmfSend_Click"/>
+            <Button Text="5" Grid.Column="1" Grid.Row="2" Style="{StaticResource IconButton}" Margin="2" Clicked="DtmfSend_Click"/>
+            <Button Text="7" Grid.Column="2" Grid.Row="2" Style="{StaticResource IconButton}" Margin="2" Clicked="DtmfSend_Click"/>
+
+            <Button Text="7" Grid.Column="0" Grid.Row="3" Style="{StaticResource IconButton}" Margin="2" Clicked="DtmfSend_Click"/>
+            <Button Text="8" Grid.Column="1" Grid.Row="3" Style="{StaticResource IconButton}" Margin="2" Clicked="DtmfSend_Click"/>
+            <Button Text="9" Grid.Column="2" Grid.Row="3" Style="{StaticResource IconButton}" Margin="2" Clicked="DtmfSend_Click"/>
+
+            <Button Text="*" Grid.Column="0" Grid.Row="4" Style="{StaticResource IconButton}" Margin="2" Clicked="DtmfSend_Click"/>
+            <Button Text="0" Grid.Column="1" Grid.Row="4" Style="{StaticResource IconButton}" Margin="2" Clicked="DtmfSend_Click"/>
+            <Button Text="#" Grid.Column="2" Grid.Row="4" Style="{StaticResource IconButton}" Margin="2" Clicked="DtmfSend_Click"/>
+        </Grid>
+
+
+        <!-- 'Main call controls' section -->
+        <Grid x:Name="gridMain" Grid.Row="2" 
+            HorizontalOptions="Center" VerticalOptions="Start" IsVisible="False">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Button  Grid.Column="0" Grid.Row="0" Command="{Binding MuteMicCommand}"
+                Text="{Binding IsMicMuted, Converter={StaticResource MuteTextConverter}, Mode=OneWay}"
+                IsEnabled="{Binding CanMuteMic}" Style="{StaticResource IconButton}">
+                <Button.ImageSource>
+                    <FontImageSource Glyph="{x:Static local:Icons.mic}" FontFamily="MaterialIconsRegular"  Size="20" 
+                           Color="{Binding IsMicMuted, Converter={StaticResource StateColorConverter}, Mode=OneWay}"/>
+                </Button.ImageSource>
+            </Button>
+
+            <Button x:Name="bnDtmfMode" Grid.Column="1" Grid.Row="0" Text="DTMF" Clicked="DtmfMode_Click"
+                    Style="{StaticResource IconButton}">
+                <Button.ImageSource>
+                    <FontImageSource Glyph="{x:Static local:Icons.dialpad}" FontFamily="MaterialIconsRegular"  Size="20" />
+                </Button.ImageSource>
+            </Button>
+
+            <Button Grid.Column="2" Grid.Row="0" Text="Speaker"
+                    Style="{StaticResource IconButton}" >
+                <Button.ImageSource>
+                    <FontImageSource Glyph="{x:Static local:Icons.volume_up}" FontFamily="MaterialIconsRegular"  Size="20" />
+                </Button.ImageSource>
+            </Button>
+
+            <Button Grid.Column="0" Grid.Row="1" Clicked="AddCall_Click" 
+                    Style="{StaticResource IconButton}" Text="Add call">
+                <Button.ImageSource>
+                    <FontImageSource Glyph="{x:Static local:Icons.add}"  FontFamily="MaterialIconsRegular"  Size="20" />
+                </Button.ImageSource>
+            </Button>
+
+            <Button Grid.Column="1" Grid.Row="1"  Command="{Binding HoldCommand}"
+                 Text="{Binding HoldState, Converter={StaticResource HoldStateTextConverter}, Mode=OneWay}"
+                 IsEnabled="{Binding CanHold}" Style="{StaticResource IconButton}">
+                <Button.ImageSource>
+                    <FontImageSource Glyph="{x:Static local:Icons.pause}" FontFamily="MaterialIconsRegular"  Size="20" 
+                            Color="{Binding IsLocalHold, Converter={StaticResource StateColorConverter}, Mode=OneWay}"/>
+                </Button.ImageSource>
+            </Button>
+
+            <Button x:Name="MenuButton"  Grid.Column="2" Grid.Row="1"
+                Clicked="ButtonMenu_Click" Text="More" Style="{StaticResource IconButton}">
+                <Button.ImageSource>
+                    <FontImageSource Glyph="{x:Static local:Icons.more_horiz}" FontFamily="MaterialIconsRegular"  Size="20" />
+                </Button.ImageSource>
+            </Button>
+
+            <BoxView x:Name="SeparatorMore" Color="LightGray" Grid.Row="1" Grid.ColumnSpan="3" 
+                     HeightRequest="1" VerticalOptions="End" IsVisible="False" Margin="0,0" />
+
+            <Button x:Name="ConferenceButton"  Grid.Column="0" Grid.Row="3" IsVisible="False" FontSize="12"
+                Clicked="Conference_Click" Text="Make&#x0a;conference" Style="{StaticResource IconButton}">
+                <Button.ImageSource>
+                    <FontImageSource Glyph="{x:Static local:Icons.call_merge}" FontFamily="MaterialIconsRegular"  Size="20" />
+                </Button.ImageSource>
+            </Button>
+
+            <Button x:Name="TransferAttButton" Grid.Column="1" Grid.Row="3" IsVisible="False"
+                Text="Attended&#x0a;transfer" IsEnabled="False" Style="{StaticResource IconButton}" FontSize="12" >
+                <Button.ImageSource>
+                    <FontImageSource Glyph="{x:Static local:Icons.phone_forwarded}" FontFamily="MaterialIconsRegular"  Size="20" />
+                </Button.ImageSource>
+            </Button>
+
+            <Button x:Name="TransferBlindButton" Grid.Column="2" Grid.Row="3" FontSize="12" IsVisible="False"
+                Clicked="TransferBlindMode_Click" Text="Blind&#x0a;transfer" Style="{StaticResource IconButton}">
+                <Button.ImageSource>
+                    <FontImageSource Glyph="{x:Static local:Icons.forward}" FontFamily="MaterialIconsRegular"  Size="20" />
+                </Button.ImageSource>
+            </Button>
+
+            <Button x:Name="PlayFileButton" Grid.Column="0" Grid.Row="4" IsVisible="False" FontSize="12" 
+                Text="{Binding IsFilePlaying, Converter={StaticResource PlayTextConverter}, Mode=OneWay}"
+                Clicked="PlayFile_Click" Style="{StaticResource IconButton}">
+                <Button.ImageSource>
+                    <FontImageSource Glyph="{x:Static local:Icons.play_arrow}" FontFamily="MaterialIconsRegular"  Size="20" 
+                           Color="{Binding IsFilePlaying, Converter={StaticResource StateColorConverter}, Mode=OneWay}"/>
+                </Button.ImageSource>
+            </Button>
+
+            <Button x:Name="RecFileButton" Grid.Column="1" Grid.Row="4" IsVisible="False" FontSize="12"
+                Text="{Binding IsFileRecording, Converter={StaticResource RecordTextConverter}, Mode=OneWay}"
+                Clicked="RecordFile_Click" Style="{StaticResource IconButton}">
+                <Button.ImageSource>
+                    <FontImageSource Glyph="{x:Static local:Icons.radio_button_checked}" FontFamily="MaterialIconsRegular"  Size="20" 
+                           Color="{Binding IsFileRecording, Converter={StaticResource StateColorConverter}, Mode=OneWay}"/>
+                </Button.ImageSource>
+            </Button>
+
+            <Button x:Name="CloseMoreButtons" Grid.Column="2"  Grid.Row="4" IsVisible="False"
+                 Clicked="ButtonMenu_Click" BackgroundColor="Transparent" TextColor="Red" BorderWidth="2"
+                Margin="3,0" HorizontalOptions="Center" Style="{StaticResource IconButton}"
+                Text="{x:Static local:Icons.close}" FontFamily="MaterialIconsRegular" FontSize="18">
+            </Button>
+        </Grid>
+    </Grid>
+</ContentView>

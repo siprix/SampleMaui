@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="SampleMaui.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:SampleMaui"
+    xmlns:pages="clr-namespace:SampleMaui.Pages"
+    Shell.FlyoutBehavior="Disabled" Shell.NavBarIsVisible="False"
+    Title="SampleMaui">
+
+    <TabBar x:Name="ShellTabBar">
+        <ShellContent Title="Accounts" Route="AccountsListPage" ContentTemplate="{DataTemplate pages:AccountsListPage}" >
+            <ShellContent.Icon>
+                <FontImageSource FontFamily="MaterialIconsRegular" Glyph="{x:Static local:Icons.list}"/>
+            </ShellContent.Icon>
+        </ShellContent>
+
+        <ShellContent Title="Calls" Route="CallsListPage"  ContentTemplate="{DataTemplate pages:CallsListPage}" 
+                      x:Name="CallsPage">
+            <ShellContent.Icon>
+                <FontImageSource FontFamily="MaterialIconsRegular" Glyph="{x:Static local:Icons.phone}"/>
+            </ShellContent.Icon>
+        </ShellContent>
+
+        <ShellContent  Title="Messages" Route="MessagesPage" ContentTemplate="{DataTemplate pages:MessagesPage}" >
+            <ShellContent.Icon>
+                <FontImageSource FontFamily="MaterialIconsRegular" Glyph="{x:Static local:Icons.text_snippet}"/>
+            </ShellContent.Icon>
+        </ShellContent>
+
+        <ShellContent Title="Log" Route="LogsPage" ContentTemplate="{DataTemplate pages:LogsPage}" >
+            <ShellContent.Icon>
+                <FontImageSource FontFamily="MaterialIconsRegular" Glyph="{x:Static local:Icons.description}"/>
+            </ShellContent.Icon>
+        </ShellContent>
+    </TabBar>
+</Shell>

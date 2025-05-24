@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:system="clr-namespace:System;assembly=netstandard"
+             xmlns:pages="clr-namespace:SampleMaui.Pages"
+             xmlns:local="clr-namespace:SampleMaui"
+             x:Class="SampleMaui.Pages.CallsListPage"
+             Title="CallsPage">
+
+    <Grid x:Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="3*" />
+        </Grid.RowDefinitions>
+
+        <CollectionView Margin="2" x:Name="lbCalls" 
+             ItemsSource="{Binding Path=Collection}" SelectionMode="None">
+
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="1" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <Border Grid.ColumnSpan="6" 
+                             Background="{Binding IsSwitchedCall, Converter={StaticResource SwitchedCallColorConverter}, Mode=OneWay}"/>
+
+                        <Label Text="{Binding IsIncoming, Converter={StaticResource CallDirectionIconConverter}, Mode=OneWay}"  
+                             Grid.Column="0" FontFamily="MaterialIconsRegular" TextColor="Green" 
+                             FontSize="22" Margin="5" VerticalOptions="Center"  />
+
+                        <ActivityIndicator IsRunning="true" Grid.Column="0" Scale="0.8" IsVisible="{Binding IsWaiting}"/>
+
+                        <Label Text="{x:Static local:Icons.lock_lock}"  Grid.Column="1" Margin="0,0,2,0"
+                             IsVisible="{Binding HasSecureMedia}" FontFamily="MaterialIconsRegular" 
+                             FontSize="16"  VerticalOptions="Center" />
+
+                        <Label Text="{Binding Duration, Mode=OneWay}"  Grid.Column="2" Margin="0,0,3,0"
+                              VerticalOptions="Center" HorizontalOptions="End"/>
+
+                        <Label Grid.Column="2" VerticalOptions="Center" >
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="{Binding DisplName}" FontAttributes="Italic"/>
+                                    <Span Text=" " />
+                                    <Span Text="{Binding RemoteExt}" FontAttributes="Bold"/>
+                                    <Span Text="{x:Static system:Environment.NewLine}" />
+                                    <Span Text="{Binding CallState, Mode=OneWay}" FontAttributes="Italic" TextColor="Gray" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+
+                        <HorizontalStackLayout Grid.Column="3" Grid.ColumnSpan="3" HorizontalOptions="End">
+                            <HorizontalStackLayout IsVisible="False">
+                                <Button Text="{x:Static local:Icons.call}" Style="{StaticResource MenuItemButton}"
+                                    Command="{Binding AcceptCommand}" IsVisible="{Binding CanAccept}" BackgroundColor="Green"/>
+
+                                <Button Text="{x:Static local:Icons.call_end}" Style="{StaticResource MenuItemButton}"
+                                    Command="{Binding RejectCommand}" IsVisible="{Binding CanReject}" BackgroundColor="Red"/>
+
+                                <Button Text="{x:Static local:Icons.swap_calls}" Style="{StaticResource MenuItemButton}"
+                                    Command="{Binding SwitchToCommand}" IsVisible="{Binding CanSwitchTo}" />
+
+                                <Button Text="{x:Static local:Icons.pause}" 
+                                    TextColor="{Binding IsLocalHold, Converter={StaticResource StateColorConverter}, Mode=OneWay}"
+                                    Style="{StaticResource MenuItemButton}"
+                                    Command="{Binding HoldCommand}" IsVisible="{Binding CanHold}" />
+
+                                <Button Text="{x:Static local:Icons.call_end}" Style="{StaticResource MenuItemButton}"
+                                    Command="{Binding HangupCommand}" IsVisible="{Binding CanHangup}" BackgroundColor="Red" />
+                            </HorizontalStackLayout>
+
+                            <Button Style="{StaticResource MenuButton}" Clicked="ButtonMenu_Click"/>
+                        </HorizontalStackLayout>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

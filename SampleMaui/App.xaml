@@ -1,0 +1,79 @@
+﻿<?xml version = "1.0" encoding = "UTF-8" ?>
+<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:SampleMaui"
+             xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
+             android:Application.WindowSoftInputModeAdjust="Resize"
+             x:Class="SampleMaui.App">
+    <Application.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style x:Key="MenuButton" TargetType="{x:Type Button}" >
+                <Setter Property="Text" Value="{x:Static local:Icons.more_horiz}"/>
+                <Setter Property="FontFamily" Value="MaterialIconsRegular" />
+                <Setter Property="FontSize" Value="20" />
+                <Setter Property="Margin" Value="3" />
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="CornerRadius" Value="25"/>
+
+                <Setter Property="BorderWidth" Value="1" />
+                <Setter Property="BorderColor" Value="{StaticResource Primary}" />
+                <Setter Property="TextColor" Value="{StaticResource Primary}" />
+                <Setter Property="Background" Value="White" />
+            </Style>
+
+            <Style x:Key="MenuItemButton" TargetType="{x:Type Button}" >
+                <Setter Property="FontFamily" Value="MaterialIconsRegular" />
+                <Setter Property="CornerRadius" Value="15" />
+                <Setter Property="FontSize" Value="22" />
+                <Setter Property="Margin" Value="3" />
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="Opacity" Value="0.8" />
+            </Style>
+
+            
+            <Style TargetType="Grid">
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal" />
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="LightSkyBlue" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+            
+
+            <local:InverseBoolToVisibilityConverter x:Key="InvBoolToVis"/>
+            <local:MicMuteIconConverter x:Key="MicMuteIconConverter"/>
+            <local:CamMuteIconConverter x:Key="CamMuteIconConverter"/>
+            <local:MuteTextConverter    x:Key="MuteTextConverter"/>
+            <local:PlayTextConverter    x:Key="PlayTextConverter"/>
+            <local:RecordTextConverter  x:Key="RecordTextConverter"/>
+            <local:StateColorConverter  x:Key="StateColorConverter"/>
+            <local:CdrStateIconConverter x:Key="CdrStateIconConverter"/>
+            <local:CdrStateColorConverter x:Key="CdrStateColorConverter"/>
+
+            <local:HoldStateIconConverter x:Key="HoldStateIconConverter"/>
+            <local:HoldStateTextConverter x:Key="HoldStateTextConverter"/>
+
+            <local:CallDirectionIconConverter x:Key="CallDirectionIconConverter"/>
+            <local:RegStateIconConverter x:Key="RegStateIconConverter"/>
+            <local:RegStateColorConverter x:Key="RegStateColorConverter"/>
+            <local:MessageSentColorConverter x:Key="MessageSentColorConverter"/>
+
+            <local:BLFStateColorConverter x:Key="BLFStateColorConverter"/>
+
+            <local:SwitchedCallColorConverter x:Key="SwitchedCallColorConverter"/>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

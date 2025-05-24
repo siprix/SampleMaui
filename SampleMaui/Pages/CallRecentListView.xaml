@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:system="clr-namespace:System;assembly=netstandard"
+             xmlns:local="clr-namespace:SampleMaui" 
+             x:Class="SampleMaui.Pages.CallRecentListView">
+
+    <Border x:Name="brdShadow" Margin="5" StrokeThickness="1" Stroke="Gray" >
+
+        <Grid ColumnDefinitions="Auto,*, Auto" 
+              RowDefinitions="*,Auto,Auto" 
+              BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}">
+
+            <CollectionView Margin="2" x:Name="lbCdrs" Grid.ColumnSpan="3" 
+                 ItemsSource="{Binding Path=Collection}" SelectionMode="Single" >
+
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="1" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ColumnDefinitions="Auto, *">
+                            <BoxView HeightRequest="1" Color="LightGray" Grid.Row="0" Grid.ColumnSpan="2" VerticalOptions="End" Margin="5,0"/>
+
+                            <Label Grid.Column="0" FontSize="22" Margin="5" VerticalOptions="Center" 
+                                     Text="{Binding State, Converter={StaticResource CdrStateIconConverter}, Mode=OneWay}"
+                                     TextColor="{Binding State, Converter={StaticResource CdrStateColorConverter}, Mode=OneWay}" 
+                                     FontFamily="MaterialIconsRegular"  />
+
+                            <Label Grid.Column="1" VerticalOptions="Center">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding DisplName}" FontAttributes="Italic"/>
+                                        <Span Text=" " />
+                                        <Span Text="{Binding RemoteExt}" FontAttributes="Bold"/>
+                                        <Span Text=" (" TextColor="Gray"/>
+                                        <Span Text="{Binding AccUri, Mode=OneWay}" FontAttributes="Italic" TextColor="Gray"/>
+                                        <Span Text=")" TextColor="Gray"/>
+                                        <Span Text="{x:Static system:Environment.NewLine}"/>
+                                        <Span Text="{Binding MadeAtDate, Mode=OneWay}" FontAttributes="Italic" TextColor="Gray"/>
+                                        <Span Text=" Duration: " FontAttributes="Italic" TextColor="Gray"/>
+                                        <Span Text="{Binding Duration, Mode=OneWay}" FontAttributes="Italic" TextColor="Gray"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
+                            <HorizontalStackLayout Grid.Column="1" Grid.ColumnSpan="3" HorizontalOptions="End">
+                                <HorizontalStackLayout IsVisible="False">
+                                    <Button Text="{x:Static local:Icons.delete}" Style="{StaticResource MenuItemButton}"
+                                            Clicked="RecentCallDelete_Click" />
+                                </HorizontalStackLayout>
+
+                                <Button Style="{StaticResource MenuButton}" Clicked="ButtonMenu_Click"/>
+                            </HorizontalStackLayout>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Label x:Name="tbErrText" Text="Can't start call. Add account first" HorizontalOptions="Center" ZIndex="2"
+                Grid.Row="2" Grid.Column="1" VerticalOptions="Start" TextColor="Red" IsVisible="False"/>
+
+            <Picker x:Name="cbAccounts" Grid.Row="1" Grid.Column="1"  Margin="3" 
+                ItemsSource="{Binding Path=Collection}"  ItemDisplayBinding="{Binding Uri}"
+                SelectedItem="{Binding Path=SelectedAccount, Mode=OneWay}" />
+
+            <Button x:Name="btnCancel" Text="Cancel"  Grid.Column="0" Grid.Row="1"
+                Margin="3,3" WidthRequest="100" VerticalOptions="End" HorizontalOptions="Start" Padding="0"
+                IsVisible="False" Clicked="Cancel_Click" >
+                <Button.ImageSource>
+                    <FontImageSource Glyph="{x:Static local:Icons.arrow_back}" FontFamily="MaterialIconsRegular" Size="20" />
+                </Button.ImageSource>
+            </Button>
+            
+            <Label x:Name="btnDialpad" Text="{x:Static local:Icons.dialpad}" Grid.Column="0" Grid.Row="2" Margin="5,0"  ZIndex="2" 
+                  FontFamily="MaterialIconsRegular" FontSize="20" HorizontalOptions="End" VerticalOptions="Center" >
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="ShowDialpad_Click"/>
+                </Label.GestureRecognizers>
+            </Label>
+
+            <Entry x:Name="txDestExt" Grid.Column="1" VerticalOptions="Start" Grid.Row="2"
+                FontAttributes="Bold" Margin="2" Placeholder="Extension" Focused="DestExt_Focused"/>
+
+            <Button x:Name="btnVideoCall" Text="{x:Static local:Icons.videocam}" Clicked="AddVideoCall_Click"
+                Grid.Row="1" Grid.Column="2"  Margin="3"  Padding="0"
+                FontFamily="MaterialIconsRegular" FontSize="20" HorizontalOptions="End" 
+                BorderColor="{StaticResource Primary}" TextColor="{StaticResource Primary}" 
+                Background="White" BorderWidth="1"/>
+
+            <Button x:Name="btnAudioCall" Text="{x:Static local:Icons.call}" Clicked="AddCall_Click"
+                Grid.Column="2" Grid.Row="2" Margin="3,3" Padding="0" 
+                FontFamily="MaterialIconsRegular" FontSize="20" HorizontalOptions="End" />
+            
+            <Grid x:Name="gridDialpad" Grid.Column="1" 
+                HorizontalOptions="Start" VerticalOptions="End" ZIndex="2" IsVisible="False">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Button Text="1" Grid.Column="0" Grid.Row="1" Margin="3" Clicked = "DtmfSend_Click"/>
+                <Button Text="2" Grid.Column="1" Grid.Row="1" Margin="3" Clicked = "DtmfSend_Click"/>
+                <Button Text="3" Grid.Column="2" Grid.Row="1" Margin="3" Clicked = "DtmfSend_Click"/>
+
+                <Button Text="4" Grid.Column="0" Grid.Row="2" Margin="3" Clicked = "DtmfSend_Click"/>
+                <Button Text="5" Grid.Column="1" Grid.Row="2" Margin="3" Clicked = "DtmfSend_Click"/>
+                <Button Text="7" Grid.Column="2" Grid.Row="2" Margin="3" Clicked = "DtmfSend_Click"/>
+
+                <Button Text="7" Grid.Column="0" Grid.Row="3" Margin="3" Clicked = "DtmfSend_Click"/>
+                <Button Text="8" Grid.Column="1" Grid.Row="3" Margin="3" Clicked = "DtmfSend_Click"/>
+                <Button Text="9" Grid.Column="2" Grid.Row="3" Margin="3" Clicked = "DtmfSend_Click"/>
+
+                <Button Text="*" Grid.Column="0" Grid.Row="4" Margin="3" Clicked = "DtmfSend_Click"/>
+                <Button Text="0" Grid.Column="1" Grid.Row="4" Margin="3" Clicked = "DtmfSend_Click"/>
+                <Button Text="#" Grid.Column="2" Grid.Row="4" Margin="3" Clicked = "DtmfSend_Click"/>
+            </Grid>
+        </Grid>
+    </Border>
+</ContentView>

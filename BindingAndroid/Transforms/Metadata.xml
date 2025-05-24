@@ -1,0 +1,60 @@
+﻿<metadata>
+  <!--
+  This sample removes the class: android.support.v4.content.AsyncTaskLoader.LoadTask:
+  <remove-node path="/api/package[@name='android.support.v4.content']/class[@name='AsyncTaskLoader.LoadTask']" />
+  
+  This sample removes the method: android.support.v4.content.CursorLoader.loadInBackground:
+  <remove-node path="/api/package[@name='android.support.v4.content']/class[@name='CursorLoader']/method[@name='loadInBackground']" />
+  -->
+
+    <!--  
+    <remove-node path="/api/package[@name='org.webrtc']" /> 
+    
+    -->
+    
+    <remove-node path="/api/package[@name='org.webrtc']/class[@name='AndroidVideoDecoder']" />
+    <remove-node path="/api/package[@name='org.webrtc']/class[@name='AndroidVideoDecoder.1']" />
+    <remove-node path="/api/package[@name='org.webrtc']/class[@name='AndroidVideoDecoder.DecodedTextureMetadata']" />
+    <remove-node path="/api/package[@name='org.webrtc']/class[@name='AndroidVideoDecoder.FrameInfo']" />
+        
+    <remove-node path="/api/package[@name='org.webrtc']/class[@name='Camera1Capturer']" />
+    <remove-node path="/api/package[@name='org.webrtc']/class[@name='Camera2Capturer']" />  
+    <remove-node path="/api/package[@name='org.webrtc']/class[@name='WrappedNativeVideoDecoder']" />
+    <remove-node path="/api/package[@name='org.webrtc']/class[@name='WrappedNativeVideoEncoder']" />    
+    <remove-node path="/api/package[@name='org.webrtc']/class[@name='VideoEncoderFallback']" />
+    <remove-node path="/api/package[@name='org.webrtc']/class[@name='TimestampAligner']" />
+    <remove-node path="/api/package[@name='org.webrtc']/class[@name='SurfaceTextureHelper']" />
+    <remove-node path="/api/package[@name='org.webrtc']/class[@name='CameraEnumerator']" />
+    <remove-node path="/api/package[@name='org.webrtc']/class[@name='Camera2Enumerator']" />
+    <remove-node path="/api/package[@name='org.webrtc']/class[@name='Camera1Enumerator']" />
+    
+    <remove-node path="/api/package[@name='org.webrtc']/class[@name='VideoEncoder']" />
+    <remove-node path="/api/package[@name='org.webrtc']/class[@name='VideoCapturer']" />
+    <remove-node path="/api/package[@name='org.webrtc']/class[@name='VideoDecoderFallback']" />
+    
+    <remove-node path="/api/package[@name='org.webrtc']/class[@name='TextureBufferImpl']" />
+    <remove-node path="/api/package[@name='org.webrtc']/class[@name='TextureBufferImpl.1']" />
+    <remove-node path="/api/package[@name='org.webrtc']/class[@name='TextureBufferImpl.2']" />
+    <remove-node path="/api/package[@name='org.webrtc']/class[@name='TextureBufferImpl.IRefCountMonitor']" />
+
+    <attr path="/api/package[@name='com.siprix']/interface[@name='ISiprixServiceListener']/method[@name='onCallIncoming']" 
+          name="managedName">OnCallIncoming2</attr>
+    <attr path="/api/package[@name='com.siprix']/interface[@name='ISiprixServiceListener']/method[@name='onCallTerminated']" 
+          name="managedName">OnCallTerminated2</attr>
+
+    
+    <!--  
+  <remove-node path="/api/package[@name='com.siprix']/interface[@name='ISiprixServiceListener']" />
+
+  <remove-node path="/api/package[@name='com.siprix']/class[@name='SiprixCore']/method[@name='setServiceListener']" />
+
+
+    <attr path="/api/package[@name='com.siprix']/interface[@name='ISiprixServiceListener']/method[@name='onCallIncoming']"
+    name="argsType">CallIncomingServiceEventArgs</attr>
+
+  <attr path="/api/package[@name='com.siprix']/interface[@name='ISiprixServiceListener']/method[@name='onCallTerminated']"
+    name="argsType">CallTerminatedEventArgs</attr>
+-->
+    
+
+</metadata>
