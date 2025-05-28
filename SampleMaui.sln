@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleMaui", "SampleMaui\Sa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BindingAndroid", "BindingAndroid\BindingAndroid.csproj", "{A2CE0DB8-1322-49C1-8EBE-1BF05B84DE9B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BindingIOS", "BindingIOS\BindingIOS.csproj", "{A9B86982-98BB-4193-8B48-8B0C480E0675}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{A2CE0DB8-1322-49C1-8EBE-1BF05B84DE9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2CE0DB8-1322-49C1-8EBE-1BF05B84DE9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2CE0DB8-1322-49C1-8EBE-1BF05B84DE9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9B86982-98BB-4193-8B48-8B0C480E0675}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9B86982-98BB-4193-8B48-8B0C480E0675}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9B86982-98BB-4193-8B48-8B0C480E0675}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9B86982-98BB-4193-8B48-8B0C480E0675}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

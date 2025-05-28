@@ -44,6 +44,12 @@ public class AccountModel : INotifyPropertyChanged
     public bool CanRegister { get { return (RegState != RegState.InProgress);  } }
     public bool CanUnRegister { get { return (RegState != RegState.InProgress) && (RegState != RegState.Removed); } }
 
+    bool isMenuVisible = false;
+    public bool IsMenuVisible { 
+        get { return isMenuVisible;  }
+        set { isMenuVisible = value; NotifyPropertyChanged(nameof(IsMenuVisible)); } 
+    }
+
     private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -338,6 +344,13 @@ public class AccountsListModel(ObjModel parent_) : INotifyPropertyChanged
         parent_.PostSaveAccountsChanges();
         parent_.Logs?.Print($"Updated account accId:{accData.MyAccId}");
         return err;
+    }
+
+    public void ToggleMenuVisible(AccountModel accIn)
+    {
+        bool newVisible = !accIn.IsMenuVisible;
+        foreach (var accModel in collection_) accModel.IsMenuVisible = false;
+        accIn.IsMenuVisible = newVisible;
     }
 
     //Event raised by SDK

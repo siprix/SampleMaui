@@ -99,6 +99,10 @@
 	  <ProjectReference Include="..\BindingAndroid\BindingAndroid.csproj" />
 	</ItemGroup>
 
+	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
+	  <ProjectReference Include="..\BindingIOS\BindingIOS.csproj" />
+	</ItemGroup>
+
 	<ItemGroup>
 	  <Compile Update="Pages\AccountAddPage.xaml.cs">
 	    <DependentUpon>AccountAddPage.xaml</DependentUpon>
