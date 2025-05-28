@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0-ios</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>true</ImplicitUsings>
+    <IsBindingProject>true</IsBindingProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ObjcBindingApiDefinition Include="ApiDefinition.cs" />
+    <ObjcBindingCoreSource Include="StructsAndEnums.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <NativeReference Include="siprix.xcframework">
+      <Kind>Framework</Kind>
+      <Frameworks>Foundation</Frameworks>
+      <SmartLink>True</SmartLink>
+      <ForceLoad>True</ForceLoad>
+      <LinkerFlags>-L "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/" -L "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos" -Wl,-rpath -Wl,@executable_path/Frameworks</LinkerFlags>
+    </NativeReference>
+    <NativeReference Include="siprixMedia.xcframework">
+      <Kind>Framework</Kind>
+      <SmartLink>True</SmartLink>
+      <ForceLoad>True</ForceLoad>
+      <Frameworks>Foundation</Frameworks>
+    </NativeReference>
+  </ItemGroup>
+
+</Project>
