@@ -468,6 +468,11 @@ public class CoreService : ICoreService
             eventDelegate_.OnPlayerState((uint)playerId, getCommon(state));
         }
 
+        public override void OnRingerState(bool started)
+        {
+            eventDelegate_.OnRingerState(started);
+        }
+
         public override void OnCallIncoming(nint callId, nint accId, bool withVideo, string hdrFrom, string hdrTo)
         {
             eventDelegate_.OnCallIncoming((uint)callId, (uint)accId, withVideo, hdrFrom, hdrTo);
